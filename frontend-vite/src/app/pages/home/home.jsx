@@ -3,7 +3,7 @@ import TourSection from '../../../components/home/tour-section.jsx';
 
 const Home = () => {
 	return (
-		<div>
+		<div style={{ marginTop: '60px' }}>
 			<StartScreen />
 			<TourSection />
 		</div>

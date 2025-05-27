@@ -7,7 +7,7 @@ export function Layout({ children }) {
 			style={{ display: 'flex', flexDirection: 'column', minHeight: '100%' }}
 		>
 			<Header />
-			<main style={{ flexGrow: 1, marginTop: '60px' }}>{children}</main>
+			<main style={{ flexGrow: 1 }}>{children}</main>
 			<Footer />
 		</div>
 	);

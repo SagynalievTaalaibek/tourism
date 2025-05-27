@@ -8,4 +8,6 @@ export const NAVIGATION_HEADER_FOOTER = [
 export const NAVIGATION = {
 	HOME: '/',
 	TOURS: '/tours',
+	ABOUT: '/about',
+	CONTACT: '/contacts',
 };

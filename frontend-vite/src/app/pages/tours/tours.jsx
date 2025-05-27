@@ -155,62 +155,64 @@ const Tours = () => {
 	}, [selectedCategories, selectedRegion]);
 
 	return (
-		<div className={styles.tours}>
-			<div className={styles.filterToggle}>
-				<button
-					className={styles.filterButton}
-					onClick={() => setShowMobileFilters(!showMobileFilters)}
-				>
-					{showMobileFilters ? 'Закрыть фильтр' : 'Фильтр'}
-				</button>
-			</div>
-
-			<div className={styles.container}>
-				<div
-					className={`${styles.sidebar} ${
-						showMobileFilters ? styles.open : ''
-					}`}
-				>
-					<div className={styles.filterGroup}>
-						<h3>Категории</h3>
-						{categoriesList.map(cat => (
-							<label key={cat} className={styles.checkboxLabel}>
-								<input
-									type="checkbox"
-									value={cat}
-									checked={selectedCategories.includes(cat)}
-									onChange={() => handleCategoryChange(cat)}
-								/>
-								{cat}
-							</label>
-						))}
-					</div>
-
-					<div className={styles.filterGroup}>
-						<h3>Регион</h3>
-						<select value={selectedRegion} onChange={handleRegionChange}>
-							<option value="">Все регионы</option>
-							{regionsList.map(region => (
-								<option key={region} value={region}>
-									{region}
-								</option>
-							))}
-						</select>
-					</div>
-
-					<button className={styles.searchButton} onClick={handleSearch}>
-						Поиск
+		<div style={{ marginTop: '60px' }}>
+			<div className={styles.tours}>
+				<div className={styles.filterToggle}>
+					<button
+						className={styles.filterButton}
+						onClick={() => setShowMobileFilters(!showMobileFilters)}
+					>
+						{showMobileFilters ? 'Закрыть фильтр' : 'Фильтр'}
 					</button>
 				</div>
 
-				<div className={styles.mainContent}>
-					<div ref={tourListRef}></div>
-					<h2>Туры</h2>
-					<div className={styles.tourList}>
-						{filteredTours.length === 0 && <p>Туры не найдены</p>}
-						{filteredTours.map(tour => (
-							<TourCard key={tour.id} tour={tour} />
-						))}
+				<div className={styles.container}>
+					<div
+						className={`${styles.sidebar} ${
+							showMobileFilters ? styles.open : ''
+						}`}
+					>
+						<div className={styles.filterGroup}>
+							<h3>Категории</h3>
+							{categoriesList.map(cat => (
+								<label key={cat} className={styles.checkboxLabel}>
+									<input
+										type="checkbox"
+										value={cat}
+										checked={selectedCategories.includes(cat)}
+										onChange={() => handleCategoryChange(cat)}
+									/>
+									{cat}
+								</label>
+							))}
+						</div>
+
+						<div className={styles.filterGroup}>
+							<h3>Регион</h3>
+							<select value={selectedRegion} onChange={handleRegionChange}>
+								<option value="">Все регионы</option>
+								{regionsList.map(region => (
+									<option key={region} value={region}>
+										{region}
+									</option>
+								))}
+							</select>
+						</div>
+
+						<button className={styles.searchButton} onClick={handleSearch}>
+							Поиск
+						</button>
+					</div>
+
+					<div className={styles.mainContent}>
+						<div ref={tourListRef}></div>
+						<h2>Туры</h2>
+						<div className={styles.tourList}>
+							{filteredTours.length === 0 && <p>Туры не найдены</p>}
+							{filteredTours.map(tour => (
+								<TourCard key={tour.id} tour={tour} />
+							))}
+						</div>
 					</div>
 				</div>
 			</div>
