@@ -1,6 +1,6 @@
 .main_page {
     position: relative;
-    background: url("public/start.jpg") no-repeat center center fixed;
+    background: url("/start.jpg") no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
     display: flex;
