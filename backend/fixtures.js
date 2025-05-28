@@ -90,7 +90,7 @@ const run = async () => {
             includes: ['Отель', 'Ски-пасс', 'Прокат'],
             region: 'Иссык-Куль',
             category: 'Зимние туры',
-            image: 'https://bestway.kg/wp-content/uploads/2023/10/cea6bc32b2531dbfc9d8fd547c58fa2f.jpg',
+            image: 'https://destinationkarakol.com/wp-content/uploads/2017/10/Karakol_Snowboard-1024x682.jpg.webp',
             contactPhone: '+996 700 555 555',
             contactEmail: 'ski@karakol.kg',
         },

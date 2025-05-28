@@ -4,85 +4,6 @@ import TourCard from '../../../components/tours/tour-card/tour-card.jsx';
 
 import styles from './tours.module.css';
 
-const mockTours = [
-	{
-		id: 1,
-		title: 'Тур в горы',
-		description: 'Невероятные горные пейзажи и свежий воздух ждут вас!',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Горы'],
-		region: 'Нарын',
-	},
-	{
-		id: 2,
-		title: 'Озёрный отдых',
-		description: 'Отдых у живописных озёр с кристально чистой водой.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Озёра'],
-		region: 'Иссык-Куль',
-	},
-	{
-		id: 3,
-		title: 'Экстрим на озерах',
-		description: 'Водные приключения, драйв и незабываемые впечатления.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Озёра', 'Экстрим'],
-		region: 'Иссык-Куль',
-	},
-	{
-		id: 4,
-		title: 'Культурный тур по Чую',
-		description:
-			'Погружение в традиции, архитектуру и историю Чуйской области.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Культурные туры'],
-		region: 'Чуй',
-	},
-	{
-		id: 5,
-		title: 'Зимние приключения',
-		description: 'Горнолыжные трассы, снежные склоны и зимние забавы.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Зимние туры'],
-		region: 'Ош',
-	},
-	{
-		id: 6,
-		title: 'Юрты и этнотуризм',
-		description:
-			'Уникальный опыт жизни в юрте и знакомства с кочевыми традициями.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Юрты и этнотуризм'],
-		region: 'Иссык-Куль',
-	},
-	{
-		id: 7,
-		title: 'Заповедники Баткена',
-		description:
-			'Исследуйте дикие уголки природы и редкие виды растений и животных.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Заповедники'],
-		region: 'Баткен',
-	},
-	{
-		id: 8,
-		title: 'Достопримечательности Таласа',
-		description:
-			'Откройте для себя малоизвестные, но удивительные места Таласа.',
-		imageUrl:
-			'https://goldenglobeint.com/wp-content/uploads/2024/10/Cho3-1024x926.jpeg',
-		category: ['Достопримечательности'],
-		region: 'Талас',
-	},
-];
-
 const categoriesList = [
 	'Горы',
 	'Озёра',
@@ -113,6 +34,30 @@ const Tours = () => {
 	const [showMobileFilters, setShowMobileFilters] = useState(false);
 	const tourListRef = useRef(null);
 
+	const [data, setData] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	console.log(data);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch('http://localhost:8080/api/tourism');
+				if (!response.ok) {
+					throw new Error('Ошибка при загрузке данных');
+				}
+				const result = await response.json();
+				setData(result);
+			} catch (err) {
+				console.error('Fetch error:', err);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	const handleCategoryChange = category => {
 		setSelectedCategories(prev =>
 			prev.includes(category)
@@ -132,15 +77,17 @@ const Tours = () => {
 		}, 100);
 	};
 
-	const filteredTours = mockTours.filter(tour => {
-		const categoryMatch =
-			selectedCategories.length === 0 ||
-			tour.category.some(c => selectedCategories.includes(c));
+	const filteredTours =
+		data?.filter(tour => {
+			const categoryMatch =
+				selectedCategories.length === 0 ||
+				selectedCategories.includes(tour.category);
 
-		const regionMatch = selectedRegion === '' || tour.region === selectedRegion;
+			const regionMatch =
+				selectedRegion === '' || tour.region === selectedRegion;
 
-		return categoryMatch && regionMatch;
-	});
+			return categoryMatch && regionMatch;
+		}) || [];
 
 	useEffect(() => {
 		const catParam =
@@ -208,10 +155,15 @@ const Tours = () => {
 						<div ref={tourListRef}></div>
 						<h2>Туры</h2>
 						<div className={styles.tourList}>
-							{filteredTours.length === 0 && <p>Туры не найдены</p>}
-							{filteredTours.map(tour => (
-								<TourCard key={tour.id} tour={tour} />
-							))}
+							{loading ? (
+								<p>Загрузка...</p>
+							) : filteredTours.length === 0 ? (
+								<p>Туры не найдены</p>
+							) : (
+								filteredTours.map(tour => (
+									<TourCard key={tour._id} tour={tour} />
+								))
+							)}
 						</div>
 					</div>
 				</div>

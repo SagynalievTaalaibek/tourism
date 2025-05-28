@@ -1,20 +1,16 @@
-import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from './app/layout/layout.jsx';
 import About from './app/pages/about/about.jsx';
 import Contacts from './app/pages/contacts/contacts.jsx';
 import Home from './app/pages/home/home.jsx';
-import LoginAdmin from './app/pages/login-admin/login-admin.jsx';
 import OneTour from './app/pages/tours/one-tour/one-tour.jsx';
 import Tours from './app/pages/tours/tours.jsx';
 import NotFound from './components/ui/notfound/notfound.jsx';
 import ProtectedRoute from './components/ui/protect/protect.jsx';
-import { selectUser } from './features/user/user.slice.js';
 import { NAVIGATION } from './shared/constants/constants.js';
 
 const App = () => {
-	const user = useSelector(selectUser);
 	return (
 		<>
 			<Layout>
@@ -24,7 +20,6 @@ const App = () => {
 					<Route path={`${NAVIGATION.TOURS}/:id`} element={<OneTour />} />
 					<Route path={NAVIGATION.ABOUT} element={<About />} />
 					<Route path={NAVIGATION.CONTACT} element={<Contacts />} />
-					<Route path={NAVIGATION.ADMIN} element={<LoginAdmin />} />
 
 					<Route
 						path="/admin/test"
